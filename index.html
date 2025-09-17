@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio de Panetones - La Lune</title>
+    <!-- Tailwind CSS para um design rápido e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts para uma tipografia elegante e renascentista -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos personalizados com tema renascentista em preto e branco */
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background-color: #f9f9f9; /* Cor de fundo branco suave */
+            color: #222222; /* Cor de texto preta/cinza escuro */
+            position: relative;
+        }
+
+        /* Ornamentos decorativos em cinza claro */
+        .ornament {
+            position: absolute;
+            color: #dddddd;
+            font-size: 80px;
+            opacity: 0.8;
+            z-index: 0;
+        }
+        .ornament.top-left { top: 20px; left: 20px; transform: rotate(0deg); }
+        .ornament.top-right { top: 20px; right: 20px; transform: rotate(90deg); }
+        .ornament.bottom-left { bottom: 20px; left: 20px; transform: rotate(-90deg); }
+        .ornament.bottom-right { bottom: 20px; right: 20px; transform: rotate(180deg); }
+
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Estilo do cabeçalho com floreios em preto */
+        .title-container {
+            position: relative;
+            display: inline-block;
+            padding: 0 40px;
+        }
+        .title-container::before, .title-container::after {
+            content: " · ⚜ · "; /* Fleur-de-lis como ornamento */
+            font-size: 1.5rem;
+            color: #333333; /* Cor do ornamento escura */
+            line-height: 1;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .title-container::before { left: 0; }
+        .title-container::after { right: 0; }
+
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            /* Borda dupla para um toque clássico */
+            outline: 4px solid #f9f9f9;
+            outline-offset: -5px;
+            position: relative; /* Essencial para posicionar o sinete */
+            overflow: hidden; /* Garante que o sinete não vaze para fora */
+        }
+        
+        .card h2 {
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        /* Estilo do sinete de meia-lua */
+        .card-seal {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            width: 50px;
+            height: 50px;
+            transform: rotate(-15deg);
+            pointer-events: none; /* Impede que o sinete interfira com o texto */
+        }
+        
+        .instagram-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            vertical-align: middle;
+            color: #333333;
+        }
+
+        /* Estilos para impressão */
+        @media print {
+            @page {
+                size: A4;
+                margin: 1.5cm;
+            }
+
+            body {
+                background-color: #ffffff !important;
+                color: #000000;
+                font-size: 10pt;
+                font-family: 'Cormorant Garamond', serif;
+            }
+
+            h1, h2 {
+                font-family: 'Playfair Display', serif;
+            }
+            
+            .ornament, footer, .shadow-lg, .transition-transform, .card-seal {
+                display: none !important;
+                box-shadow: none !important;
+                transform: none !important;
+            }
+
+            .print-container {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8cm;
+                align-items: stretch;
+                padding: 0 !important;
+            }
+            
+            header {
+                grid-column: 1 / -1;
+                margin-bottom: 1rem;
+            }
+            header img {
+                height: 65px !important;
+                width: 65px !important;
+                margin-bottom: 0.25rem !important;
+            }
+            header h1 { font-size: 18pt !important; }
+            header p { font-size: 10pt !important; }
+            .title-container::before, .title-container::after { content: none; }
+
+
+            main {
+                display: contents;
+            }
+
+            .card {
+                box-shadow: none !important;
+                border: 1px solid #ccc !important;
+                border-radius: 4px !important;
+                transform: none !important;
+                page-break-inside: avoid;
+                padding: 0.7rem !important;
+                margin: 0 !important;
+                background-color: #fff !important;
+                display: flex;
+                flex-direction: column;
+                outline: none !important;
+                overflow: visible !important;
+            }
+            .card h2 {
+                font-size: 12pt !important;
+                padding-bottom: 0.3rem !important;
+                margin-bottom: 0.4rem !important;
+                border-image: none !important;
+                border-bottom: 1px solid #ccc !important;
+            }
+            .card p {
+                margin-bottom: 0.4rem !important;
+                font-size: 9.5pt !important;
+            }
+            .card ul {
+                font-size: 9.5pt !important;
+                list-style-type: none;
+                padding: 0;
+            }
+             .card li { margin-bottom: 2px; }
+
+            .relative.min-h-screen {
+                padding: 0;
+                min-height: auto;
+            }
+
+            img {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Ornamentos -->
+    <div class="ornament top-left">⚜</div>
+    <div class="ornament top-right">⚜</div>
+    <div class="ornament bottom-left">⚜</div>
+    <div class="ornament bottom-right">⚜</div>
+
+    <!-- Conteúdo principal -->
+    <div class="relative min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 z-10 print-container">
+        
+        <header class="text-center mb-10">
+            <img src="lalune.jpg" alt="Logo La Lune" class="mx-auto h-32 w-32 sm:h-40 sm:w-40 mb-4 bg-white rounded-full object-cover shadow-lg">
+            <div class="title-container">
+                <h1 class="text-4xl sm:text-5xl font-bold tracking-wide">La Lune</h1>
+            </div>
+            <p class="text-lg sm:text-xl text-gray-600 mt-2">Cardápio de Panetones</p>
+        </header>
+
+        <main class="w-full max-w-2xl mx-auto space-y-8">
+            <section class="card p-6 rounded-lg transition-transform hover:scale-105">
+                <h2 class="text-2xl font-bold pb-3 mb-4">Chocotones Recheados - Linha Tradicional</h2>
+                <p class="text-md font-semibold mb-4 text-gray-700">100g - R$ 22,00  |  400g - R$ 90,00</p>
+                <ul class="list-none space-y-2">
+                    <li>- Brigadeiro tradicional</li>
+                    <li>- Brigadeiro Ninho</li>
+                    <li>- Beijinho</li>
+                    <li>- Prestígio</li>
+                    <li>- Bem casado</li>
+                    <li>- Doce de Leite</li>
+                </ul>
+                <svg class="card-seal" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <filter id="wobble" x="-20%" y="-20%" width="140%" height="140%">
+                            <feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="1" result="turbulence"/>
+                            <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="5"/>
+                        </filter>
+                    </defs>
+                    <g>
+                        <!-- Sinete de meia-lua com borda irregular -->
+                        <path d="M 50 15 A 35 35 0 1 0 50 85 A 25 25 0 1 1 50 15 Z" fill="#222222" filter="url(#wobble)"/>
+                    </g>
+                </svg>
+            </section>
+
+            <section class="card p-6 rounded-lg transition-transform hover:scale-105">
+                <h2 class="text-2xl font-bold pb-3 mb-4">Chocotones Recheados - Linha Gourmet</h2>
+                <p class="text-md font-semibold mb-4 text-gray-700">100g - R$ 30,00  |  400g - R$ 120,00</p>
+                <ul class="list-none space-y-2">
+                    <li>- Doce de Leite com Nozes</li>
+                    <li>- Ninho com Nutella</li>
+                    <li>- Ganache Chocolate Branco (Nobre)</li>
+                    <li>- Ganache Chocolate ao Leite (Nobre)</li>
+                    <li>- Doce de Leite com Coco Queimado</li>
+                    <li>- Ganache Chocolate Belga</li>
+                    <li>- Caramelo Salgado</li>
+                    <li>- Ovomaltine</li>
+                    <li>- Ninho com Oreo</li>
+                </ul>
+                <svg class="card-seal" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <filter id="wobble-2" x="-20%" y="-20%" width="140%" height="140%">
+                            <feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="1" result="turbulence"/>
+                            <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="5"/>
+                        </filter>
+                    </defs>
+                    <g>
+                        <!-- Sinete de meia-lua com borda irregular -->
+                        <path d="M 50 15 A 35 35 0 1 0 50 85 A 25 25 0 1 1 50 15 Z" fill="#222222" filter="url(#wobble-2)"/>
+                    </g>
+                </svg>
+            </section>
+
+            <section class="card p-6 rounded-lg transition-transform hover:scale-105">
+                <h2 class="text-2xl font-bold pb-3 mb-4">Panetone Salgado</h2>
+                <p class="text-md font-semibold mb-4 text-gray-700">80g - R$ 20,00  |  280g - R$ 72,00</p>
+                <ul class="list-none space-y-2">
+                    <li>- Queijo do Reino</li>
+                </ul>
+                <svg class="card-seal" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <filter id="wobble-3" x="-20%" y="-20%" width="140%" height="140%">
+                            <feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="1" result="turbulence"/>
+                            <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="5"/>
+                        </filter>
+                    </defs>
+                    <g>
+                        <!-- Sinete de meia-lua com borda irregular -->
+                        <path d="M 50 15 A 35 35 0 1 0 50 85 A 25 25 0 1 1 50 15 Z" fill="#222222" filter="url(#wobble-3)"/>
+                    </g>
+                </svg>
+            </section>
+
+            <section class="card p-6 rounded-lg transition-transform hover:scale-105">
+                <h2 class="text-2xl font-bold pb-3 mb-4">Panetone e Chocotone (Sem recheio)</h2>
+                <p class="text-md font-semibold mb-4 text-gray-700">80g - R$ 10,00  |  280g - R$ 35,00</p>
+                <ul class="list-none space-y-2">
+                    <li>- Frutas Cristalizadas</li>
+                    <li>- Gotas de Chocolate</li>
+                </ul>
+                <svg class="card-seal" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <filter id="wobble-4" x="-20%" y="-20%" width="140%" height="140%">
+                            <feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="1" result="turbulence"/>
+                            <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="5"/>
+                        </filter>
+                    </defs>
+                    <g>
+                        <!-- Sinete de meia-lua com borda irregular -->
+                        <path d="M 50 15 A 35 35 0 1 0 50 85 A 25 25 0 1 1 50 15 Z" fill="#222222" filter="url(#wobble-4)"/>
+                    </g>
+                </svg>
+            </section>
+        </main>
+
+        <footer class="text-center mt-10">
+            <a href="https://www.instagram.com/lalune.oficial" target="_blank" class="inline-flex items-center hover:opacity-75 transition-opacity">
+                <svg class="instagram-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+                @lalune.oficial
+            </a>
+        </footer>
+    </div>
+</body>
+</html>
+
+
+
+
+
